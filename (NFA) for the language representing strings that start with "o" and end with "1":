@@ -1,0 +1,25 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    char input[100];
+    int len, i;
+    printf("Enter the string: ");
+    scanf("%s", input);
+    len = strlen(input);
+    if(input[0] == 'o' && input[len-1] == '1') {
+        for(i=1; i<len-1; i++) {
+            if(input[i] != 'o') {
+                break;
+            }
+        }
+        if(i == len-1) {
+            printf("The string is accepted by the NFA.\n");
+        } else {
+            printf("The string is not accepted by the NFA.\n");
+        }
+    } else {
+        printf("The string is not accepted by the NFA.\n");
+    }
+    return 0;
+}
