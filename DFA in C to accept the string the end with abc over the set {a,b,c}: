@@ -1,0 +1,49 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdbool.h>
+
+bool isAccepted(char* str) {
+int state = 0;
+int len = strlen(str);
+for (int i = 0; i < len; i++) {
+char c = str[i];
+switch (state) {
+case 0:
+if (c == 'a')
+state = 1;
+else if (c == 'b')
+state = 2;
+else
+return false;
+break;
+case 1:
+if (c == 'a')
+state = 1;
+else if (c == 'b')
+state = 2;
+else
+return false;
+break;
+case 2:
+if (c == 'c')
+state = 3;
+else
+return false;
+break;
+case 3:
+return false;
+}
+}
+return (state == 3);
+}
+
+int main() {
+char str[100];
+printf("Enter a string: ");
+scanf("%s", str);
+if (isAccepted(str))
+printf("Accepted\n");
+else
+printf("Not Accepted\n");
+return 0;
+}
