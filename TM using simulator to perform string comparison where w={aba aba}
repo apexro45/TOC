@@ -1,0 +1,61 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX_LEN 50
+#define NOT_ACCEPTED 0
+#define ACCEPTED 1
+
+int main() {
+    char str[MAX_LEN];
+    int state = 0;
+    int i = 0;
+
+    printf("Enter a string: ");
+    scanf("%s", str);
+
+    int len = strlen(str);
+
+    while (state != -1 && i < len) {
+        char current_char = str[i];
+        switch (state) {
+            case 0:
+                if (current_char == 'a') {
+                    state = 1;
+                } else {
+                    state = -1;
+                }
+                break;
+            case 1:
+                if (current_char == 'b') {
+                    state = 2;
+                } else if (current_char == 'a') {
+                    state = 1;
+                } else {
+                    state = -1;
+                }
+                break;
+            case 2:
+                if (current_char == 'a') {
+                    state = 3;
+                } else {
+                    state = -1;
+                }
+                break;
+            case 3:
+                if (i == len - 1) {
+                    state = ACCEPTED;
+                } else {
+                    state = -1;
+                }
+                break;
+        }
+        i++;
+    }
+
+    if (state == ACCEPTED) {
+        printf("Accepted\n");
+    } else {
+        printf("Not accepted\n");
+    }
+    return 0;
+}
