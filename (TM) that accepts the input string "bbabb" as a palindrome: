@@ -1,0 +1,89 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX_TAPE_LENGTH 100
+
+char tape[MAX_TAPE_LENGTH];
+int tape_index;
+
+void moveLeft() {
+tape_index--;
+}
+
+void moveRight() {
+tape_index++;
+}
+
+void writeChar(char c) {
+tape[tape_index] = c;
+}
+
+int main() {
+// initialize tape
+memset(tape, ' ', sizeof(tape));
+tape_index = MAX_TAPE_LENGTH / 2;
+
+// input string
+char input[] = "bbabb";
+int input_index = 0;
+
+// state variables
+int state = 0;
+int accept_state = 4;
+
+// loop until accept state is reached or input is exhausted
+while (state != accept_state && input_index < strlen(input)) {
+char current_char = tape[tape_index];
+
+perl
+Copy code
+switch (state) {
+  case 0:
+    if (current_char == ' ') {
+      // write first character of input
+      writeChar(input[input_index++]);
+      moveRight();
+      state = 1;
+    }
+    break;
+  case 1:
+    if (current_char == input[input_index]) {
+      // match found, move right
+      input_index++;
+      moveRight();
+    } else {
+      // match not found, go to state 2
+      state = 2;
+    }
+    break;
+  case 2:
+    if (current_char == input[input_index - 1]) {
+      // match found, move left
+      moveLeft();
+      state = 3;
+    }
+    break;
+  case 3:
+    if (current_char == input[input_index - 1]) {
+      // match found, move left
+      moveLeft();
+    } else {
+      // match not found, go back to state 2
+      state = 2;
+    }
+    break;
+  case 4:
+    // accept state
+    break;
+}
+}
+
+// check if accept state is reached
+if (state == accept_state) {
+printf("Accepted\n");
+} else {
+printf("Rejected\n");
+}
+
+return 0;
+}
