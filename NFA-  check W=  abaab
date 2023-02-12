@@ -1,0 +1,14 @@
+Start state: q0
+Final state: q2
+Transition function:
+q0, a => q1
+q1, a => q1
+q1, b => q2
+To check if the string "abaab" is accepted by the NFA, you can follow the transitions in the automaton:
+
+Start at q0, read 'a' and go to q1
+Read 'b' and go to q2
+Read 'a' and go back to q1
+Read 'a' and go to q1
+Read 'b' and go to q2
+Since the automaton reaches the final state q2 after reading the last character 'b', the string "abaab" is accepted by the NFA.
