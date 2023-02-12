@@ -1,0 +1,99 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdbool.h>
+
+#define MAX_STACK_SIZE 100
+#define MAX_INPUT_LENGTH 100
+
+char stack[MAX_STACK_SIZE];
+int top = -1;
+
+void push(char symbol) {
+    stack[++top] = symbol;
+}
+
+char pop() {
+    if (top == -1) {
+        return '\0';
+    }
+    return stack[top--];
+}
+
+bool isStackEmpty() {
+    return top == -1;
+}
+
+char getTopOfStack() {
+    return stack[top];
+}
+
+bool checkString(char *input) {
+    int inputLength = strlen(input);
+    int current = 0;
+    push('Z');
+    while (current < inputLength) {
+        char currentSymbol = input[current];
+        char topOfStack = getTopOfStack();
+        switch (topOfStack) {
+            case 'Z':
+                switch (currentSymbol) {
+                    case 'a':
+                        push('A');
+                        current++;
+                        break;
+                    default:
+                        return false;
+                }
+                break;
+            case 'A':
+                switch (currentSymbol) {
+                    case 'a':
+                        push('A');
+                        current++;
+                        break;
+                    case 'b':
+                        push('B');
+                        current++;
+                        break;
+                    default:
+                        return false;
+                }
+                break;
+            case 'B':
+                switch (currentSymbol) {
+                    case '2':
+                        push('C');
+                        current++;
+                        break;
+                    default:
+                        return false;
+                }
+                break;
+            case 'C':
+                switch (currentSymbol) {
+                    case 'a':
+                        pop();
+                        current++;
+                        break;
+                    default:
+                        return false;
+                }
+                break;
+            default:
+                return false;
+        }
+    }
+    return isStackEmpty();
+}
+
+int main() {
+    char input[MAX_INPUT_LENGTH];
+    printf("Enter the input string: ");
+    scanf("%s", input);
+    if (checkString(input)) {
+        printf("Accepted\n");
+    } else {
+        printf("Not accepted\n");
+    }
+    return 0;
+}
