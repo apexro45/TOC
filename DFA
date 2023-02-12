@@ -1,0 +1,68 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+
+#define MAX_STATES 100
+#define MAX_SYMBOLS 100
+
+int n, m, k;
+int e[MAX_STATES][MAX_SYMBOLS];
+
+bool accepting[MAX_STATES];
+
+bool isAcceptingState(int state) {
+    return accepting[state];
+}
+
+bool checkString(char *string) {
+    int state = 0;
+    for (int i = 0; string[i]; i++) {
+        int symbol = string[i];
+        state = e[state][symbol];
+        if (state == -1) {
+            return false;
+        }
+    }
+    return isAcceptingState(state);
+}
+
+int main() {
+    printf("Enter number of states: ");
+    scanf("%d", &n);
+    printf("Enter number of symbols: ");
+    scanf("%d", &k);
+    printf("Enter number of transitions: ");
+    scanf("%d", &m);
+
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < k; j++) {
+            e[i][j] = -1;
+        }
+    }
+
+    for (int i = 0; i < m; i++) {
+        int x, y;
+        char symbol[10];
+        scanf("%d %s %d", &x, symbol, &y);
+        int sym = *symbol;
+        e[x][sym] = y;
+    }
+
+    printf("Enter number of accepting states: ");
+    scanf("%d", &m);
+    for (int i = 0; i < m; i++) {
+        int x;
+        scanf("%d", &x);
+        accepting[x] = true;
+    }
+
+    char string[100];
+    printf("Enter the string to check: ");
+    scanf("%s", string);
+    if (checkString(string)) {
+        printf("Accepted\n");
+    } else {
+        printf("Not accepted\n");
+    }
+    return 0;
+}
