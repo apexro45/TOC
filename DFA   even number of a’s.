@@ -1,0 +1,23 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX_LEN 100
+
+int main() {
+    char input[MAX_LEN];
+    printf("Enter a string: ");
+    scanf("%s", input);
+    int len = strlen(input);
+    int count = 0;
+    for (int i = 0; i < len; i++) {
+        if (input[i] == 'a') {
+            count++;
+        }
+    }
+    if (count % 2 == 0) {
+        printf("Accepted\n");
+    } else {
+        printf("Rejected\n");
+    }
+    return 0;
+}
