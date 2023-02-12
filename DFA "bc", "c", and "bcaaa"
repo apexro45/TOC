@@ -1,0 +1,43 @@
+#include <stdio.h>
+#include <string.h>
+
+int state = 0; // initial state
+
+// function to transition to the next state
+void transition(char c) {
+  switch(state) {
+    case 0:
+      if (c == 'b') state = 1;
+      break;
+    case 1:
+      if (c == 'c') state = 2;
+      else if (c == 'a') state = 1;
+      break;
+    case 2:
+      if (c == 'a') state = 1;
+      break;
+  }
+}
+
+// function to check if the string is accepted
+int check(char* str) {
+  int i;
+  for (i = 0; i < strlen(str); i++) {
+    transition(str[i]);
+  }
+  return state == 2;
+}
+
+int main() {
+  char* strings[] = {"bc", "c", "bcaaa"};
+  int i;
+  for (i = 0; i < 3; i++) {
+    state = 0;
+    if (check(strings[i])) {
+      printf("The string %s is accepted.\n", strings[i]);
+    } else {
+      printf("The string %s is not accepted.\n", strings[i]);
+    }
+  }
+  return 0;
+}
