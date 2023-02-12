@@ -1,0 +1,44 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX_STRING_LENGTH 100
+
+int currentState = 0;
+
+bool isAcceptingState() {
+    return currentState == 2;
+}
+
+void transition(char input) {
+    switch (currentState) {
+        case 0:
+            if (input == 'o') {
+                currentState = 1;
+            }
+            break;
+        case 1:
+            if (input == '1') {
+                currentState = 2;
+            }
+            break;
+        case 2:
+            currentState = 3;
+            break;
+    }
+}
+
+int main() {
+    char string[MAX_STRING_LENGTH];
+    printf("Enter the string: ");
+    scanf("%s", string);
+    int stringLength = strlen(string);
+    for (int i = 0; i < stringLength; i++) {
+        transition(string[i]);
+    }
+    if (isAcceptingState()) {
+        printf("Accepted\n");
+    } else {
+        printf("Not accepted\n");
+    }
+    return 0;
+}
