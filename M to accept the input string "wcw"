@@ -1,0 +1,91 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+string tape;
+int head;
+
+void init() {
+    cout<<"Enter the input string: ";
+    cin>>tape;
+    tape = "B" + tape + "B";
+    head = 1;
+}
+
+void write(char c) {
+    tape[head] = c;
+}
+
+void move(int direction) {
+    head += direction;
+}
+
+void printTape() {
+    cout<<tape<<endl;
+    for(int i=0;i<head;i++) cout<<" ";
+    cout<<"^\n";
+}
+
+int main() {
+    init();
+    int state = 0;
+    while(1) {
+        switch(state) {
+            case 0:
+                if(tape[head] == 'B') {
+                    state = 1;
+                    move(1);
+                }
+                else {
+                    cout<<"Rejected\n";
+                    return 0;
+                }
+                break;
+            case 1:
+                if(tape[head] == 'w') {
+                    state = 2;
+                    move(1);
+                }
+                else if(tape[head] == 'B') {
+                    cout<<"Rejected\n";
+                    return 0;
+                }
+                else {
+                    state = 1;
+                    move(1);
+                }
+                break;
+            case 2:
+                if(tape[head] == 'c') {
+                    state = 3;
+                    move(1);
+                }
+                else {
+                    state = 1;
+                    move(1);
+                }
+                break;
+            case 3:
+                if(tape[head] == 'w') {
+                    state = 4;
+                    move(1);
+                }
+                else {
+                    state = 1;
+                    move(1);
+                }
+                break;
+            case 4:
+                if(tape[head] == 'B') {
+                    cout<<"Accepted\n";
+                    return 0;
+                }
+                else {
+                    state = 1;
+                    move(1);
+                }
+                break;
+        }
+        printTape();
+    }
+    return 0;
+}
