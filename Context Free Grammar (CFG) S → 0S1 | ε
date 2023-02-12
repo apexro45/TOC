@@ -1,0 +1,28 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX_STRING_LENGTH 100
+
+bool isValidS(char *string, int start, int end) {
+    if (start == end) {
+        return true;
+    }
+    if (string[start] == '0' && string[start + 1] == '1') {
+        return isValidS(string, start + 2, end);
+    } else {
+        return false;
+    }
+}
+
+int main() {
+    char string[MAX_STRING_LENGTH];
+    printf("Enter the string: ");
+    scanf("%s", string);
+    int stringLength = strlen(string);
+    if (isValidS(string, 0, stringLength)) {
+        printf("Accepted\n");
+    } else {
+        printf("Not accepted\n");
+    }
+    return 0;
+}
