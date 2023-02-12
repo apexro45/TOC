@@ -1,0 +1,17 @@
+States: Q0, Q1, Q2, Q3
+
+Alphabet: {a, b}
+
+Transitions:
+
+Q0: If the input is 'a', transition to Q1. If the input is 'b', stay in Q0.
+
+Q1: If the input is 'a', transition to Q2. If the input is 'b', stay in Q0.
+
+Q2: If the input is 'a', transition to Q3. If the input is 'b', stay in Q0.
+
+Q3: If the input is 'a', transition back to Q1. If the input is 'b', stay in Q3.
+
+Start state: Q0
+
+Accept states: Q1, Q3
