@@ -1,0 +1,54 @@
+#include <stdio.h>
+#include <stdbool.h>
+#include <stdlib.h>
+
+#define MAX_STATES 10
+#define MAX_INPUTS 10
+
+int nfa[MAX_STATES][MAX_INPUTS];
+bool closure[MAX_STATES][MAX_STATES];
+bool visited[MAX_STATES];
+
+void findClosure(int state) {
+    for (int i = 0; i < MAX_STATES; i++) {
+        if (nfa[state][i] == 1 && !visited[i]) {
+            closure[state][i] = true;
+            visited[i] = true;
+            findClosure(i);
+        }
+    }
+}
+
+int main() {
+    int numStates, numInputs;
+    printf("Enter the number of states: ");
+    scanf("%d", &numStates);
+    printf("Enter the number of inputs: ");
+    scanf("%d", &numInputs);
+    printf("Enter the transition matrix:\n");
+    for (int i = 0; i < numStates; i++) {
+        for (int j = 0; j < numInputs; j++) {
+            scanf("%d", &nfa[i][j]);
+        }
+    }
+    for (int i = 0; i < numStates; i++) {
+        for (int j = 0; j < numStates; j++) {
+            closure[i][j] = false;
+        }
+        visited[i] = false;
+    }
+    for (int i = 0; i < numStates; i++) {
+        findClosure(i);
+    }
+    printf("The ε-closure is:\n");
+    for (int i = 0; i < numStates; i++) {
+        printf("{ ");
+        for (int j = 0; j < numStates; j++) {
+            if (closure[i][j]) {
+                printf("q%d ", j);
+            }
+        }
+        printf("}\n");
+    }
+    return 0;
+}
