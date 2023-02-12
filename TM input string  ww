@@ -1,0 +1,47 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX_LEN 100
+
+int main() {
+    char input[MAX_LEN];
+    printf("Enter the input string: ");
+    scanf("%s", input);
+    int len = strlen(input);
+    if (len % 2 != 0) {
+        printf("Rejected\n");
+        return 0;
+    }
+    int state = 0;
+    int head = 0;
+    int tail = len / 2;
+    while (head < tail) {
+        switch (state) {
+            case 0:
+                if (input[head] == input[tail]) {
+                    head++;
+                    tail++;
+                    state = 1;
+                } else {
+                    printf("Rejected\n");
+                    return 0;
+                }
+                break;
+            case 1:
+                if (input[head] == input[tail]) {
+                    head++;
+                    tail++;
+                    state = 0;
+                } else {
+                    printf("Rejected\n");
+                    return 0;
+                }
+                break;
+            default:
+                printf("Rejected\n");
+                return 0;
+        }
+    }
+    printf("Accepted\n");
+    return 0;
+}
